@@ -9,7 +9,7 @@ function setup(){
 }
 
 function draw(){
-    background(255);
+    background(0);
 
     //this is rectangle
     fill(255,200,200);
