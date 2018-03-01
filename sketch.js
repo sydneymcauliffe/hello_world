@@ -1,61 +1,55 @@
-var bugs = []; // array of Jitter objects
+let table;
+let bubbles;
+
+function preload(){
+  table=loadTable ('data/data.csv','header');
+}
 
 function setup() {
+  bg = loadImage("libraries/map.jpg");
   createCanvas(windowWidth,windowHeight);
-  // Create objects
-  for (var i=0; i<300; i++) {
-      if (i%3==0) {
-        bugs.push(new Jitter("#1a1a1a")); 
-      }
-      else if (i%2==0) {
-        bugs.push(new Jitter("#ffffff")); 
-      }
-      else if (i%5==0) {
-        bugs.push(new Jitter("#ff0000")); 
-      }
-      else {  bugs.push(new Jitter("#008000")); }
-  }
-  bg = loadImage("libraries/art.jpg");
+  console.log(table);
+  loadData();
 }
 
 function draw() {
-  background(bg);
-  for (var i=0; i<bugs.length; i++) {
-    bugs[i].move();
-    bugs[i].display();
+  background (bg);
+  for(let i=0; i< bubbles.length; i++){
+      bubbles[i].display();
   }
 }
 
-// Jitter class
-function Jitter(color) {
-  this.x = random(width);
-  this.y = random(height);
-  this.diameter = random(10, 30);
-  this.speed = 1;
-  this.color=color;
+function loadData(){
 
-  this.move = function() {
-    this.x += random(-this.speed, this.speed);
-    this.y += random(-this.speed, this.speed);
+  bubbles= [];
+
+    for(let i=0; i<table.getRowCount(); i++){
+      let row = table.getRow(i);
+      let cover = row.get ('cover');
+      let title = row.get ('title');
+      let pages = roww.get ('pages');
+      
+      bubbles[i] = new Bubble(random(0,800), random(0,800), cover, pages, title);
   }
-
-  this.display = function() {
-    star(this.x, this.y, this.diameter, this.diameter,6,this.color);
-  };
 }
 
-function star(x, y, radius1, radius2, npoints,color) {
-    var angle = TWO_PI / npoints;
-    var halfAngle = angle/2.0;
-    beginShape();
-    for (var a = 0; a < TWO_PI; a += angle) {
-      var sx = x + cos(a) * radius2;
-      var sy = y + sin(a) * radius2;
-      vertex(sx, sy);
-      sx = x + cos(a+halfAngle) * radius1;
-      sy = y + sin(a+halfAngle) * radius1;
-      vertex(sx, sy);
+
+class Bubble{
+  constructor(tempX, tempY, tempCover, tempPages, tempTitle){ 
+      this.x = temX;
+      this.y = tempY;
+      this.cover = String(tempCover);
+      this.pages = Number(tempPages);
+      this.title = String(tempTitle);
+
+  }
+
+  display(){
+    ellipse(this.x, this.y, this.pagse, this.pages);
+    text(this.title, this.x, this.y-10);
+    text(this.cover, this.x, this.y+10);
     }
-    fill(color);
-    endShape(CLOSE);
   }
+
+
+
