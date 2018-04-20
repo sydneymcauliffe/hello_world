@@ -1,4 +1,4 @@
-cover,title.pages
-red, Book, 300
-blue,Cookbook, 800
-green, Paper, 1000
+cover,title,pages
+red,Book,300
+blue,Cookbook,800
+green,Paper,1000
